@@ -1,31 +1,31 @@
 package main
 
 import (
-	"context"
+  "context"
   "github.com/spf13/viper"
   "github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // App struct
 type App struct {
-	ctx context.Context
+  ctx context.Context
 }
 
 // NewApp creates a new App application struct
 func NewApp() *App {
-	return &App{}
+  return &App{}
 }
 
 func (a *App) beforeClose(ctx context.Context) (prevent bool) {
-	cx, cy := runtime.WindowGetPosition(a.ctx)
-	cw, ch := runtime.WindowGetSize(a.ctx)
+  cx, cy := runtime.WindowGetPosition(a.ctx)
+  cw, ch := runtime.WindowGetSize(a.ctx)
 
-	viper.Set("x", cx)
-	viper.Set("y", cy)
-	viper.Set("width", cw)
-	viper.Set("height", ch)
+  viper.Set("x", cx)
+  viper.Set("y", cy)
+  viper.Set("width", cw)
+  viper.Set("height", ch)
 
-	err := viper.WriteConfig()
+  err := viper.WriteConfig()
   if err != nil {
     runtime.LogFatal(a.ctx, err.Error())
   }
@@ -35,7 +35,7 @@ func (a *App) beforeClose(ctx context.Context) (prevent bool) {
 // startup is called when the app starts. The context is saved
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
-	a.ctx = ctx
+  a.ctx = ctx
 }
 
 func (a *App) ExitApp() {
