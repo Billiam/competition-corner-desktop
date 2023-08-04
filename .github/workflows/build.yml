@@ -31,10 +31,10 @@ jobs:
           node-version: 18.17.0
 
       - name: Build
-        run: wails build -platform linux/amd64 -o "competition-corner.amd64" -upx
+        run: wails build -platform linux/amd64 -o "competition_corner-linux-x64" -upx
 
       - name: Build Windows
-        run: wails build -platform windows -o "Competition Corner.exe" -upx
+        run: wails build -platform windows -o "Competition Corner-x64.exe" -upx
 
       - name: Release
         uses: softprops/action-gh-release@v1
