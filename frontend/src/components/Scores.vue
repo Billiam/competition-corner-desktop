@@ -5,6 +5,7 @@ import Score from './Score.vue'
 const data = ref({})
 
 let reloadTimer
+let loaded = false
 
 const fetchScoreData = async () => {
   const response = await fetch('https://virtualpinballchat.com:6080/api/v1/currentWeek?channelName=competition-corner')
@@ -19,8 +20,14 @@ const fetchScoreData = async () => {
 // }
 
 const loadScores = async () => {
-  data.value = await fetchScoreData()
+  try {
+    data.value = await fetchScoreData()
+    loaded = true
+  } catch (e) {
+    console.error(e)
+  }
   reloadTimer = setTimeout(loadScores, 10*60*1000)
+
   // reloadTimer = setTimeout(loadFakeScores, 15*1000)
 }
 
@@ -40,6 +47,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+  <div class="highscores" :class="{ hide: !loaded }">
   <div class="table-info">
     <h1 class="table">
       <a :title="data.table" :href="data.tableUrl" style="--wails-draggable:none">{{ tableName }}</a>
@@ -64,6 +72,7 @@ onBeforeUnmount(() => {
       ></Score>
     </TransitionGroup>
   </table>
+  </div>
 </template>
 
 <style lang="scss">
@@ -129,4 +138,12 @@ onBeforeUnmount(() => {
     display: none;
   }
 }
+</style>
+<style scoped lang="scss">
+  .highscores {
+    transition: opacity 0.5s;
+  }
+  .hide {
+    opacity: 0;
+  }
 </style>

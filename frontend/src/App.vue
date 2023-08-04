@@ -5,10 +5,12 @@ import './style.scss'
 </script>
 
 <template>
-  <close />
-  <main>
-    <Scores />
-  </main>
+  <div v-cloak>
+    <close />
+    <main>
+      <Scores />
+    </main>
+  </div>
 </template>
 
 <style scoped>
