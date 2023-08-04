@@ -1,4 +1,4 @@
 build/bin
 node_modules
 frontend/dist
-wailsjs/go/main
+frontend/wailsjs/go/main
