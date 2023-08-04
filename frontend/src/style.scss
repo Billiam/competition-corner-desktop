@@ -1,0 +1,24 @@
+@import 'base';
+
+body {
+  font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 200;
+  position: relative;
+  overflow: hidden;
+}
+
+.button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
