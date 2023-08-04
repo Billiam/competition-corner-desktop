@@ -2,10 +2,19 @@
 ![Wide window displaying the table title and top scores including user avatars](https://github.com/Billiam/competition-corner-desktop/assets/242008/e927b8e8-ff73-4123-8c58-aff2662da296)
 ![Skinnier window with more compact view, hinding the user avatar](https://github.com/Billiam/competition-corner-desktop/assets/242008/0ba26684-7ab3-407b-8c7f-4c1460b1ae2d)
 
-
 This app displays and periodically refreshes the Virtual Pinball Chat weekly competition leaderboards:
 
 https://virtualpinballchat.com/#/weekly-rankings/competition-corner
+
+## Help
+
+> How do I limit the number of scores displayed?
+
+Resize the window so that you don't see all of the scores
+
+> How do I see more scores at once
+
+Resize the window so that you can see more of the scores
 
 ## Development
 
