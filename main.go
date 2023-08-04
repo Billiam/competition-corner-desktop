@@ -7,6 +7,7 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+		"github.com/wailsapp/wails/v2/pkg/options/windows"
 	"github.com/wailsapp/wails/v2/pkg/options/linux"
   "github.com/spf13/viper"
 )
@@ -30,7 +31,7 @@ func main() {
 		Height: viper.GetInt("height"),
 		MinWidth: 200,
 		MinHeight: 200,
-		BackgroundColour: &options.RGBA{R: 0, G: 0, B: 5, A: 220},
+		BackgroundColour: &options.RGBA{R: 0, G: 0, B: 5, A: 0},
 		Frameless: true,
 		OnBeforeClose: app.beforeClose,
 		OnDomReady: app.domReady,
@@ -42,9 +43,15 @@ func main() {
 		Bind: []interface{}{
 			app,
 		},
+		Windows: &windows.Options{
+		  WebviewIsTransparent: true,
+		  WindowIsTranslucent: true,
+      BackdropType: windows.Auto,
+      DisableFramelessWindowDecorations: false,
+      Theme: windows.Dark,
+		},
 		Linux: &linux.Options{
 		  WindowIsTranslucent: true,
-      WebviewGpuPolicy: linux.WebviewGpuPolicyAlways,
 		},
 	})
 
