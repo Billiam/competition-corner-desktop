@@ -1,0 +1,43 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install linux dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends upx libgtk-3-dev libwebkit2gtk-4.0-dev build-essential pkg-config
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.20.6
+
+      - name: Install Wails
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.17.0
+
+      - name: Build
+        run: wails build -platform linux/amd64 -o "competition-corner.amd64" -upx
+
+      - name: Build Windows
+        run: wails build -platform windows -o "Competition Corner.exe" -upx
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            build/bin/*
