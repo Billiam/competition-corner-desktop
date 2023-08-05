@@ -1,8 +1,12 @@
 <script setup>
+import { computed } from 'vue'
 const props = defineProps({
   score: {
     type: Number,
     required: true
+  },
+  date: {
+    type: String,
   },
   rank: {
     type: Number,
@@ -14,11 +18,20 @@ const props = defineProps({
   },
   image: {
     type: String
+  },
+  me: {
+    type: String
+  }
+})
+
+const localeDate = computed(() => {
+  if (props.date) {
+    return new Date(`${props.date} UTC`).toLocaleString()
   }
 })
 </script>
 <template>
-  <tr class="score-info">
+  <tr :title="localeDate" class="score-info" :class="{ me: me === user }">
     <td>{{ rank }}</td>
     <td class="user"><img class="avatar" :src="image" :alt="user" :title="user" />{{ user }}</td>
     <td class="score">{{ score.toLocaleString() }}</td>
@@ -34,11 +47,16 @@ const props = defineProps({
 }
 </style>
 <style lang="scss">
+.me {
+  color: #fff;
+  text-shadow: 0 0 3px #ffffffcc;
+}
 .score-info {
   word-break: break-word;
 }
 .score {
   white-space: nowrap;
+  color: #ccc;
 }
 .avatar {
   filter: saturate(0);

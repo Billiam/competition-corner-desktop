@@ -11,6 +11,7 @@ func LoadConfig() (error) {
   viper.SetDefault("height", 500)
   viper.SetDefault("x", 100)
   viper.SetDefault("y", 100)
+  viper.SetDefault("me", "")
 
   configFilePath, configErr := xdg.ConfigFile("competition-corner/config.json")
   if configErr != nil {

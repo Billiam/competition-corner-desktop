@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { GetUser } from '../../wailsjs/go/main/App.js'
 import Score from './Score.vue'
 
 const data = ref({})
+const me = ref("")
 
 let reloadTimer
 let loaded = false
@@ -10,6 +12,10 @@ let loaded = false
 const fetchScoreData = async () => {
   const response = await fetch('https://virtualpinballchat.com:6080/api/v1/currentWeek?channelName=competition-corner')
   return response.json()
+}
+
+const loadUser = async () => {
+  me.value = await GetUser()
 }
 
 // const loadFakeScores = () => {
@@ -32,14 +38,18 @@ const loadScores = async () => {
 }
 
 const scores = computed(() =>
-  data.value?.scores || []
+  data.value.scores || []
 )
 // strip manufacturer/year from title
 const tableName = computed(() =>
-  data.value?.table?.replace(/ ?\(.*\)$/, '')
+  data.value.table?.replace(/ ?\(.*\)$/, '')
+)
+const tableTitle = computed(() =>
+  `${data.value.table}\n${data.value.periodStart} - ${data.value.periodEnd}\nSeason ${data.value.season}, Week ${data.value.currentSeasonWeekNumber}`
 )
 onMounted(() => {
   loadScores()
+  loadUser()
 })
 onBeforeUnmount(() => {
   clearTimeout(reloadTimer)
@@ -50,8 +60,12 @@ onBeforeUnmount(() => {
   <div class="highscores" :class="{ hide: !loaded }">
   <div class="table-info">
     <h1 class="table">
-      <a :title="data.table" :href="data.tableUrl" style="--wails-draggable:none">{{ tableName }}</a>
+      <a :title="tableTitle" :href="data.tableUrl" style="--wails-draggable:none">{{ tableName }}</a>
     </h1>
+
+    <div class="divider">
+      <div class="diamond"></div>
+    </div>
   </div>
   <table class="scores">
     <thead>
@@ -67,6 +81,8 @@ onBeforeUnmount(() => {
         :key="score.username"
         :score="score.score"
         :user="score.username"
+        :date="score.posted"
+        :me="me"
         :image="score.userAvatarUrl"
         :rank="index + 1"
       ></Score>
@@ -78,10 +94,52 @@ onBeforeUnmount(() => {
 <style lang="scss">
 .table-info {
   line-height: 1.1;
-  margin-bottom: 0.5rem;
   text-align: center;
-  border-bottom: 3px #FF1186BA dotted;
-  padding: 0.5rem 0;
+  padding-top: 0.5rem;
+
+  .divider {
+    position: relative;
+    border-bottom: 1px solid #888;
+    margin: 20px 35px;
+
+    &:after,
+    &:before {
+      content: '';
+      position: absolute;
+      right: -30px;
+      top: -3px;
+      width: 20px;
+      height: 7px;
+      background-image: url('/src/assets/images/arrow.svg');
+      background-repeat: no-repeat;
+    }
+    &:before {
+      top: -4px;
+      left: -30px;
+      right: auto;
+      transform: rotate(180deg);
+    }
+  }
+
+  .diamond {
+    position: absolute;
+    left: 50%;
+    top: -4px;
+    transform: translateX(-50%) translateY(-50%);
+    border: 3px solid transparent;
+    border-bottom: 5px solid #ccc;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: -3px;
+      top: 5px;
+      width: 0;
+      height: 0;
+      border: 3px solid transparent;
+      border-top: 5px solid #ccc;
+    }
+  }
 }
 
 .table {
@@ -90,9 +148,9 @@ onBeforeUnmount(() => {
   a {
     text-decoration: none;
     color: #fff;
-    transition: color 0.1s;
+    transition: color 0.2s;
     &:hover {
-      color: #baecff;
+      color: #ffefd4;
     }
   }
 }

@@ -49,3 +49,7 @@ func (a *App) domReady(ctx context.Context) {
   runtime.WindowShow(a.ctx)
 //   runtime.WindowSetPosition(a.ctx, cx, cy)
 }
+
+func (a *App) GetUser() (user string) {
+  return viper.GetString("me")
+}
