@@ -6,6 +6,21 @@ This app displays and periodically refreshes the Virtual Pinball Chat weekly com
 
 https://virtualpinballchat.com/#/weekly-rankings/competition-corner
 
+## Configuration
+
+Configuration is stored in json, located at:
+
+* Linux: `~/.config/competition-corner`
+* Windows `%localappdata%/competition-corner/`
+
+### Value dictionary:
+
+* `width`: Window width
+* `height`: Window height
+* `x`: Window X position (not used)
+* `y`: Window Y position (not used)
+* `me`: Discord username. Matching user score will be visually highlighted
+
 ## Help
 
 > How do I limit the number of scores displayed?
