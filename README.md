@@ -1,6 +1,7 @@
 # Competition Corner App
-![Wide window displaying the table title and top scores including user avatars](https://github.com/Billiam/competition-corner-desktop/assets/242008/e927b8e8-ff73-4123-8c58-aff2662da296)
-![Skinnier window with more compact view, hinding the user avatar](https://github.com/Billiam/competition-corner-desktop/assets/242008/0ba26684-7ab3-407b-8c7f-4c1460b1ae2d)
+
+![Wide window displaying the table title and top scores including user avatars](https://github.com/Billiam/competition-corner-desktop/assets/242008/2a6b0574-166d-4143-8800-76149ad32b7b)
+![Skinnier window with more compact view, hinding the user avatar](https://github.com/Billiam/competition-corner-desktop/assets/242008/0c08cc86-db3f-4895-99fe-1880dae132a1)
 
 This app displays and periodically refreshes the Virtual Pinball Chat weekly competition leaderboards:
 
