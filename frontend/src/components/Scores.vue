@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { GetUser } from '../../wailsjs/go/main/App.js'
+import Splash from './Splash.vue'
 import Score from './Score.vue'
 
 const data = ref({})
@@ -18,12 +19,12 @@ const loadUser = async () => {
   me.value = await GetUser()
 }
 
-// const loadFakeScores = () => {
-//   const newData = {...data.value}
-//   newData.scores = data.value.scores.slice().map(v => ({ v, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(u => u.v)
-//   data.value = newData
-//   reloadTimer = setTimeout(loadFakeScores, 15*1000)
-// }
+const loadFakeScores = () => {
+  const newData = {...data.value}
+  newData.scores = data.value.scores.slice().map(v => ({ v, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(u => u.v)
+  data.value = newData
+  reloadTimer = setTimeout(loadFakeScores, 15*1000)
+}
 
 const loadScores = async () => {
   try {
@@ -33,13 +34,13 @@ const loadScores = async () => {
     console.error(e)
   }
   reloadTimer = setTimeout(loadScores, 10*60*1000)
-
   // reloadTimer = setTimeout(loadFakeScores, 15*1000)
 }
 
 const scores = computed(() =>
   data.value.scores || []
 )
+
 // strip manufacturer/year from title
 const tableName = computed(() =>
   data.value.table?.replace(/ ?\(.*\)$/, '')
@@ -48,7 +49,7 @@ const tableTitle = computed(() =>
   `${data.value.table}\n${data.value.periodStart} - ${data.value.periodEnd}\nSeason ${data.value.season}, Week ${data.value.currentSeasonWeekNumber}`
 )
 onMounted(() => {
-  loadScores()
+  setTimeout(() => { loadScores() }, 250)
   loadUser()
 })
 onBeforeUnmount(() => {
@@ -57,6 +58,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+  <Splash :class="{ hide: loaded }" />
   <div class="highscores" :class="{ hide: !loaded }">
   <div class="table-info">
     <h1 class="table">
