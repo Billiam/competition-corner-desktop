@@ -3,6 +3,7 @@ import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { GetUser } from '../../wailsjs/go/main/App.js'
 import Splash from './Splash.vue'
 import Score from './Score.vue'
+import Countdown from './Countdown.vue'
 
 const data = ref({})
 const me = ref("")
@@ -69,7 +70,7 @@ onBeforeUnmount(() => {
         <h1 class="table">
           <a :title="tableTitle" :href="tableUrl" style="--wails-draggable:none">{{ tableName }}</a>
         </h1>
-
+        <Countdown :date="data.periodEnd"></Countdown>
         <div class="divider">
           <div class="diamond"></div>
         </div>
@@ -85,14 +86,14 @@ onBeforeUnmount(() => {
         </thead>
         <TransitionGroup name="score" tag="tbody">
           <Score
-              v-for="(score, index) in scores"
-              :key="score.username"
-              :score="score.score"
-              :user="score.username"
-              :date="score.posted"
-              :me="me"
-              :image="score.userAvatarUrl"
-              :rank="index + 1"
+            v-for="(score, index) in scores"
+            :key="score.username"
+            :score="score.score"
+            :user="score.username"
+            :date="score.posted"
+            :me="me"
+            :image="score.userAvatarUrl"
+            :rank="index + 1"
           ></Score>
         </TransitionGroup>
       </table>
@@ -153,6 +154,7 @@ onBeforeUnmount(() => {
 
 .table {
   font-size: 1.2rem;
+  margin-bottom: 0.4rem;
 
   a {
     text-decoration: none;
