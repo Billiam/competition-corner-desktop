@@ -46,7 +46,7 @@ const localeDate = computed(() => {
   background-color: rgba(20,20,20,20);
 }
 </style>
-<style lang="scss">
+<style scoped lang="scss">
 .me {
   color: #fff;
   text-shadow: 0 0 3px #ffffffcc;
@@ -66,5 +66,10 @@ const localeDate = computed(() => {
   vertical-align: middle;
   margin-right: 5px;
   max-width: 30px;
+}
+@media only screen and (max-width: 250px) {
+  .avatar {
+    display: none;
+  }
 }
 </style>

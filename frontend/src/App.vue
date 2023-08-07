@@ -1,11 +1,14 @@
 <script setup>
+
 import Scores from './components/Scores.vue'
-import Close from './components/Close.vue'
+import Menubar from './components/Menubar.vue'
+
 import './style.scss'
+
 </script>
 
 <template>
-  <close />
+  <Menubar />
   <main>
     <Scores />
   </main>

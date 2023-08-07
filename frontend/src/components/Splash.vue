@@ -1,7 +1,7 @@
 <template>
   <img class="logo" src="/src/assets/images/logo-universal.png" alt="logo">
 </template>
-<style>
+<style scoped>
 .logo {
   position: absolute;
   left: 50%;

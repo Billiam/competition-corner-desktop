@@ -8,7 +8,7 @@ const data = ref({})
 const me = ref("")
 
 let reloadTimer
-let loaded = false
+let loaded = ref(false)
 
 const fetchScoreData = async () => {
   const response = await fetch('https://virtualpinballchat.com:6080/api/v1/currentWeek?channelName=competition-corner')
@@ -29,7 +29,7 @@ const loadFakeScores = () => {
 const loadScores = async () => {
   try {
     data.value = await fetchScoreData()
-    loaded = true
+    loaded.value = true
   } catch (e) {
     console.error(e)
   }
@@ -53,7 +53,7 @@ const tableUrl = computed(() =>
 )
 
 onMounted(() => {
-  setTimeout(() => { loadScores() }, 250)
+  loadScores()
   loadUser()
 })
 onBeforeUnmount(() => {
@@ -62,42 +62,45 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <Splash :class="{ hide: loaded }" />
-  <div class="highscores" :class="{ hide: !loaded }">
-  <div class="table-info">
-    <h1 class="table">
-      <a :title="tableTitle" :href="tableUrl" style="--wails-draggable:none">{{ tableName }}</a>
-    </h1>
+  <TransitionGroup name="fade">
+    <Splash v-if="!loaded" />
+    <div class="highscores" v-if="loaded">
+      <div class="table-info">
+        <h1 class="table">
+          <a :title="tableTitle" :href="tableUrl" style="--wails-draggable:none">{{ tableName }}</a>
+        </h1>
 
-    <div class="divider">
-      <div class="diamond"></div>
+        <div class="divider">
+          <div class="diamond"></div>
+        </div>
+      </div>
+
+      <table class="scores">
+        <thead>
+        <tr>
+          <th>Rank</th>
+          <th>User</th>
+          <th>Score</th>
+        </tr>
+        </thead>
+        <TransitionGroup name="score" tag="tbody">
+          <Score
+              v-for="(score, index) in scores"
+              :key="score.username"
+              :score="score.score"
+              :user="score.username"
+              :date="score.posted"
+              :me="me"
+              :image="score.userAvatarUrl"
+              :rank="index + 1"
+          ></Score>
+        </TransitionGroup>
+      </table>
     </div>
-  </div>
-  <table class="scores">
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>User</th>
-        <th>Score</th>
-      </tr>
-    </thead>
-    <TransitionGroup name="score" tag="tbody">
-      <Score
-        v-for="(score, index) in scores"
-        :key="score.username"
-        :score="score.score"
-        :user="score.username"
-        :date="score.posted"
-        :me="me"
-        :image="score.userAvatarUrl"
-        :rank="index + 1"
-      ></Score>
-    </TransitionGroup>
-  </table>
-  </div>
+  </TransitionGroup>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .table-info {
   line-height: 1.1;
   text-align: center;
@@ -160,6 +163,7 @@ onBeforeUnmount(() => {
     }
   }
 }
+
 .scores {
   width: 100%;
   border-collapse: collapse;
@@ -168,7 +172,8 @@ onBeforeUnmount(() => {
     display: none;
   }
 
-  td, th {
+  :deep(td),
+  :deep(th) {
     padding: 4px 6px;
     text-align: left;
 
@@ -197,17 +202,13 @@ onBeforeUnmount(() => {
   position: absolute;
 }
 
-@media only screen and (max-width: 250px) {
-  .avatar {
-    display: none;
-  }
+.fade-enter-active,
+.fade-leave-active {
+  opacity: 1;
+  transition: opacity 0.5s;
 }
-</style>
-<style scoped lang="scss">
-  .highscores {
-    transition: opacity 0.5s;
-  }
-  .hide {
-    opacity: 0;
-  }
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
