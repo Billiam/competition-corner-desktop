@@ -1,0 +1,45 @@
+---
+convention:
+  commitTypes:
+  - feat
+  - fix
+  - perf
+  - refactor
+  - style
+  - test
+  - build
+  - ops
+  - docs
+  - chore
+  - merge
+  - revert
+  commitScopes: []
+  releaseTagGlobPattern: v[0-9]*.[0-9]*.[0-9]*
+changelog:
+  commitTypes:
+  - feat
+  - fix
+  - perf
+  - merge
+  - docs
+  includeInvalidCommits: true
+  commitIgnoreRegexPattern: "^WIP "
+  headlines:
+    feat: "\uD83D\uDE80 Added"
+    fix: "\uD83E\uDE79 Fixes"
+    docs: "\uD83D\uDCD6 Documentation"
+    perf: "\uD83D\uDD25 Performance Improvements"
+    merge: "\ud83d\udd00 Merges"
+    breakingChange: "⚠️ BREAKING CHANGES"
+
+  # GitHub
+  commitUrl: https://github.com/billiam/competition-corner-desktop/commit/%commit%
+  commitRangeUrl: https://github.com/billiam/competition-corner-desktop/compare/%from%...%to%?diff=split
+
+  # GitHub Issues
+  issueRegexPattern: "#[0-9]+"
+  issueUrl: https://github.com/billiam/competition-corner-desktop/issues/%issue%
+
+  ## Jira Issues
+  # issueRegexPattern: "[A-Z][A-Z0-9]+-[0-9]+"
+  # issueUrl: https://WORKSPACE.atlassian.net/browse/%issue%
