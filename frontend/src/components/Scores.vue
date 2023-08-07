@@ -48,6 +48,10 @@ const tableName = computed(() =>
 const tableTitle = computed(() =>
   `${data.value.table}\n${data.value.periodStart} - ${data.value.periodEnd}\nSeason ${data.value.season}, Week ${data.value.currentSeasonWeekNumber}`
 )
+const tableUrl = computed(() =>
+  `https://virtual-pinball-spreadsheet.web.app/game/${data.value.vpsId}`
+)
+
 onMounted(() => {
   setTimeout(() => { loadScores() }, 250)
   loadUser()
@@ -62,7 +66,7 @@ onBeforeUnmount(() => {
   <div class="highscores" :class="{ hide: !loaded }">
   <div class="table-info">
     <h1 class="table">
-      <a :title="tableTitle" :href="data.tableUrl" style="--wails-draggable:none">{{ tableName }}</a>
+      <a :title="tableTitle" :href="tableUrl" style="--wails-draggable:none">{{ tableName }}</a>
     </h1>
 
     <div class="divider">
