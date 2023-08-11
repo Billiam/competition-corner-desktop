@@ -7,7 +7,7 @@ import (
   "github.com/wailsapp/wails/v2/pkg/runtime"
   "github.com/wailsapp/wails/v2/pkg/options"
   "github.com/wailsapp/wails/v2/pkg/options/assetserver"
-    "github.com/wailsapp/wails/v2/pkg/options/windows"
+  "github.com/wailsapp/wails/v2/pkg/options/windows"
   "github.com/wailsapp/wails/v2/pkg/options/linux"
   "github.com/spf13/viper"
 )
